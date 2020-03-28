@@ -1,9 +1,9 @@
-var lowerChoices = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"];
-var upperChoices = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+var lowerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+var upperChoices = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 var numberChoices = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-var symbolChoices = ["!","#","$","%","&","'","(",")","*","+",",","-",".","/",":",";","<","=",">","?","@","[","]","^","_","`","{","|","}","~"];
+var symbolChoices = ["!", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^", "_", "`", "{", "|", "}", "~"];
 
-function getRandom(arr){
+function getRandom(arr) {
   var itemIndex = Math.floor(Math.random() * arr.length);
   var item = arr[itemIndex];
   return item;
@@ -11,52 +11,88 @@ function getRandom(arr){
 }
 
 
-function generatePassword(){
+
+
+
+function generatePassword() {
 
   var passwordLength = prompt('Choose a password character length-between 8 and 128');
 
-  while(isNaN(passwordLength) === true){
-      alert('Please choose numbers only.');
-      passwordLength = prompt('Choose a password character length-between 8 and 128');
-        while(passwordLength < 8 || passwordLength > 128){
-        alert('Please choose between 8 and 128.');
-        passwordLength = prompt('Choose a password character length-between 8 and 128');
-        }
+  while (isNaN(passwordLength) === true || passwordLength < 8 || passwordLength > 128) {
+    alert('Please choose numbers only and/or between 8 and 128.');
+    passwordLength = prompt('Choose a password character length-between 8 and 128');
+    // while(passwordLength < 8 || passwordLength > 128){
+    //     alert('Please choose between 8 and 128.');
+    //     passwordLength = prompt('Choose a password character length-between 8 and 128');
+    // }
   }
-}
+
+  console.log("check");
+  var passwordTypelower = confirm('Would you like the password to contain lowercase?');
+  var passwordTypeupper = confirm('Would you like the password to contain uppercase?');
+  var passwordTypenumber = confirm('Would you like the password to contain numbers?');
+  var passwordTypespecial = confirm('Would you like the password to contain special characters?');
 
 
+  
+  // var newGeneratedPassword = '';
+  // for (var i = 0; i < passwordLength; i++)  {
 
-var passwordTypelower = confirm('Would you like the password to contain lowercase?');
-var passwordTypeupper = confirm('Would you like the password to contain uppercase?');
-var passwordTypenumber = confirm('Would you like the password to contain numbers?');
-var passwordTypespecial = confirm('Would you like the password to contain special characters?');
-
-
-
-var newGeneratedPassword = '';
-for (var i = 0; i < passwordLength; i++)  {
+  // if(passwordTypelower === true && newGeneratedPassword.length < passwordLength){
+  //    newGeneratedPassword += getRandom(lowerChoices);
+  // }
+  // if(passwordTypeupper === true && newGeneratedPassword.length < passwordLength){
+  //   newGeneratedPassword += getRandom(upperChoices);
+  // }
+  // if(passwordTypenumber === true && newGeneratedPassword.length < passwordLength){
+  //   newGeneratedPassword += getRandom(numberChoices);
+  // }
+  // if(passwordTypespecial === true && newGeneratedPassword.length < passwordLength){
+  //   newGeneratedPassword += getRandom(symbolChoices);
+  // }
+    var singleList = []
+    if (passwordTypelower) {
+    singleList.push(...lowerChoices);
+    } 
+    if (passwordTypeupper) {
+    singleList.push(...upperChoices);
+    } 
+    if (passwordTypenumber) {
+    singleList.push(...numberChoices);
+    }     
+    if (passwordTypespecial) {
+    singleList.push(...symbolChoices);
+    } 
+  console.log(singleList);
+  
+  // }
+  // var singleList = lowerChoices.concat(upperChoices, numberChoices, symbolChoices);
+   // var finalPassword = singleList[Math.floor(Math.random() * passwordLength)]; 
+  var finalPassword = "";
+    
         
-  if(passwordTypelower === true && newGeneratedPassword.length < passwordLength){
-     newGeneratedPassword += getRandom(lowerChoices);
-  }
-  if(passwordTypeupper === true && newGeneratedPassword.length < passwordLength){
-    newGeneratedPassword += getRandom(upperChoices);
-  }
-  if(passwordTypenumber === true && newGeneratedPassword.length < passwordLength){
-    newGeneratedPassword += getRandom(numberChoices);
-  }
-  if(passwordTypespecial === true && newGeneratedPassword.length < passwordLength){
-    newGeneratedPassword += getRandom(symbolChoices);
-  }
+        for (var i = 0; i < passwordLength; i++) {
+          var finalPasswordCharacter = getRandom(singleList);
+          finalPassword = finalPassword + finalPasswordCharacter;
+          console.log(finalPassword);
+          
+        }
+      
+        alert(finalPassword);
+  
+  
+  
+        return finalPassword;
 
-  return newGeneratedPassword();
+  
 }
+
+
 
 
 // Write password to the #password input
 function writePassword() {
-  
+
   var password = generatePassword();
   var passwordText = document.querySelector("#password");
 
