@@ -78,7 +78,7 @@ function generatePassword() {
           
         }
       
-        alert(finalPassword);
+        
   
   
   
